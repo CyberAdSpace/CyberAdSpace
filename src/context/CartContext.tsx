@@ -97,6 +97,13 @@ interface CartContextType {
   cartCount: number
   openCheckout: () => void
   clearCart: () => void
+  /* WebAuth wallet */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  walletSession: any
+  walletActor: string
+  walletConnecting: boolean
+  connectWallet: () => Promise<void>
+  disconnectWallet: () => void
 }
 
 const CartContext = createContext<CartContextType | null>(null)
@@ -112,6 +119,45 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cartOpen, setCartOpen] = useState(false)
   const [checkoutOpen, setCheckoutOpen] = useState(false)
   const [selectedSizes, setSelectedSizes] = useState<Record<number, SizeKey>>({})
+
+  /* WebAuth wallet state */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [walletSession, setWalletSession] = useState<any>(null)
+  const [walletActor, setWalletActor] = useState('')
+  const [walletConnecting, setWalletConnecting] = useState(false)
+
+  const connectWallet = async () => {
+    setWalletConnecting(true)
+    try {
+      const { default: ProtonWebSDK } = await import('@proton/web-sdk')
+      const { session } = await ProtonWebSDK({
+        linkOptions: {
+          endpoints: ['https://proton.greymass.com'],
+          restoreSession: false,
+        },
+        transportOptions: {
+          requestAccount: 'cyberadspace',
+          requestStatus: true,
+        },
+        selectorOptions: {
+          appName: 'CyberAdSpace',
+          appLogo: '/images/cybertruck-mockup-nobg.png',
+        },
+      })
+      if (session) {
+        setWalletSession(session)
+        setWalletActor(String(session.auth.actor))
+      }
+    } catch (err: unknown) {
+      console.error('Wallet connect error:', err)
+    }
+    setWalletConnecting(false)
+  }
+
+  const disconnectWallet = () => {
+    setWalletSession(null)
+    setWalletActor('')
+  }
 
   /* load Authorize.net Accept.js (sandbox) */
   useEffect(() => {
@@ -198,6 +244,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
         cartCount,
         openCheckout,
         clearCart,
+        walletSession,
+        walletActor,
+        walletConnecting,
+        connectWallet,
+        disconnectWallet,
       }}
     >
       {children}

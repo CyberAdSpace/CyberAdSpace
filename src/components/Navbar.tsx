@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, QrCode, Award, ShoppingCart } from 'lucide-react'
+import { Menu, X, QrCode, Award, ShoppingCart, Wallet, Loader2 } from 'lucide-react'
 import { rewardsService } from '../services/rewards'
 import { useCart } from '../context/CartContext'
 
@@ -9,7 +9,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
   const points = rewardsService.getBalance()
-  const { cartCount, setCartOpen } = useCart()
+  const { cartCount, setCartOpen, walletActor, walletConnecting, connectWallet, disconnectWallet } = useCart()
 
   useState(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -66,6 +66,28 @@ export default function Navbar() {
               <Award className="w-4 h-4 text-amber-400" />
               <span className="text-xs font-bold text-gray-300">{points} CAS</span>
             </div>
+            {walletActor ? (
+              <button
+                onClick={disconnectWallet}
+                className="flex items-center gap-1.5 bg-green-500/10 border border-green-500/30 px-3 py-1.5 rounded-full text-green-300 hover:bg-green-500/20 transition-colors"
+              >
+                <Wallet className="w-4 h-4" />
+                <span className="text-xs font-bold">{walletActor.slice(0, 8)}...</span>
+              </button>
+            ) : (
+              <button
+                onClick={connectWallet}
+                disabled={walletConnecting}
+                className="flex items-center gap-1.5 border border-white/20 px-3 py-1.5 rounded-full text-gray-300 hover:bg-white/5 hover:text-white transition-colors disabled:opacity-50"
+              >
+                {walletConnecting ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Wallet className="w-4 h-4" />
+                )}
+                <span className="text-xs font-bold">CONNECT WALLET</span>
+              </button>
+            )}
             <Link
               to="/brands"
               className="bg-white text-black px-5 py-2 text-sm font-bold tracking-wide hover:bg-gray-200 transition-colors"
@@ -90,6 +112,27 @@ export default function Navbar() {
               <Award className="w-3.5 h-3.5 text-amber-400" />
               <span className="text-xs font-bold text-gray-300">{points} CAS</span>
             </div>
+            {walletActor ? (
+              <button
+                onClick={disconnectWallet}
+                className="flex items-center gap-1 bg-green-500/10 border border-green-500/30 px-2 py-1 rounded-full text-green-300"
+              >
+                <Wallet className="w-3.5 h-3.5" />
+                <span className="text-xs font-bold">{walletActor.slice(0, 6)}</span>
+              </button>
+            ) : (
+              <button
+                onClick={connectWallet}
+                disabled={walletConnecting}
+                className="flex items-center gap-1 border border-white/20 px-2 py-1 rounded-full text-gray-300 disabled:opacity-50"
+              >
+                {walletConnecting ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Wallet className="w-3.5 h-3.5" />
+                )}
+              </button>
+            )}
             <button onClick={() => setMenuOpen(!menuOpen)} className="p-2 text-white">
               {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>

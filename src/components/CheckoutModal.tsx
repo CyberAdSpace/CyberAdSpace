@@ -8,7 +8,7 @@ const AUTHNET_API_LOGIN = 'YOUR_API_LOGIN_ID'
 const AUTHNET_CLIENT_KEY = 'YOUR_PUBLIC_CLIENT_KEY'
 
 export default function CheckoutModal() {
-  const { cart, checkoutOpen, setCheckoutOpen, cartTotal, clearCart } = useCart()
+  const { cart, checkoutOpen, setCheckoutOpen, cartTotal, clearCart, walletSession, walletActor, walletConnecting, connectWallet } = useCart()
 
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'crypto'>('card')
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle')
@@ -19,12 +19,6 @@ export default function CheckoutModal() {
   const [expMonth, setExpMonth] = useState('')
   const [expYear, setExpYear] = useState('')
   const [cardCode, setCardCode] = useState('')
-
-  /* WebAuth / XPR */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [walletSession, setWalletSession] = useState<any>(null)
-  const [walletActor, setWalletActor] = useState('')
-  const [walletConnecting, setWalletConnecting] = useState(false)
 
   if (!checkoutOpen) return null
 
@@ -81,41 +75,20 @@ export default function CheckoutModal() {
   }
 
   /* WebAuth / XPR Network */
-  const connectWallet = async () => {
-    setWalletConnecting(true)
+  const handleConnectWallet = async () => {
     setPaymentStatus('idle')
     setPaymentMessage('')
     try {
-      const { default: ProtonWebSDK } = await import('@proton/web-sdk')
-      const { session } = await ProtonWebSDK({
-        linkOptions: {
-          endpoints: ['https://proton.greymass.com'],
-          restoreSession: false,
-        },
-        transportOptions: {
-          requestAccount: 'cyberadspace',
-          requestStatus: true,
-        },
-        selectorOptions: {
-          appName: 'CyberAdSpace',
-          appLogo: '/images/cybertruck-mockup-nobg.png',
-        },
-      })
-      if (session) {
-        setWalletSession(session)
-        setWalletActor(String(session.auth.actor))
-      }
+      await connectWallet()
     } catch (err: unknown) {
-      console.error('Wallet connect error:', err)
       setPaymentStatus('error')
       const message =
         err instanceof Error ? err.message : 'Failed to connect wallet. Make sure you have WebAuth installed.'
       setPaymentMessage(message)
     }
-    setWalletConnecting(false)
   }
 
-  const handleXprPayment = async () => {
+  const handleXprPayment= async () => {
     if (!walletSession) {
       setPaymentStatus('error')
       setPaymentMessage('Please connect your wallet first.')
@@ -344,7 +317,7 @@ export default function CheckoutModal() {
                     </div>
                   ) : (
                     <button
-                      onClick={connectWallet}
+                      onClick={handleConnectWallet}
                       disabled={walletConnecting}
                       className="w-full border border-white/20 py-4 font-bold tracking-wide hover:bg-white/5 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                     >
