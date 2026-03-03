@@ -1,8 +1,29 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { QrCode, Instagram, Twitter, Mail, ArrowRight } from 'lucide-react'
 import brands from '../config/brands'
 
 export default function Footer() {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const scrollToJoin = (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (location.pathname === '/') {
+      const joinSection = document.getElementById('join')
+      if (joinSection) {
+        joinSection.scrollIntoView({ behavior: 'smooth' })
+      }
+    } else {
+      navigate('/')
+      setTimeout(() => {
+        const joinSection = document.getElementById('join')
+        if (joinSection) {
+          joinSection.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 300)
+    }
+  }
+
   return (
     <footer className="border-t border-white/10 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -59,13 +80,14 @@ export default function Footer() {
               Have a brand that belongs on CyberAdSpace? We're always looking for founder-led brands
               to join the marketplace.
             </p>
-            <Link
-              to="/#join"
+            <a
+              href="/#join"
+              onClick={scrollToJoin}
               className="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-gray-300 transition-colors"
             >
               Join Marketplace
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </a>
           </div>
         </div>
 
