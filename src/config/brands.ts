@@ -131,7 +131,7 @@ const brands: Brand[] = [
     longDescription:
       'C\u00e1\u00f1amo Caf\u00e9 is where Colombian coffee tradition meets modern hemp wellness. We source the finest beans from Colombia and blend them with premium hemp options for a coffee experience like no other. Whether you prefer your cup classic or infused, every sip is crafted for those who demand quality and flavor.',
     email: 'CanamoCafe@CyberAdSpace.com',
-    image: null,
+    image: '/images/canamo-cafe-logo.png',
     icon: 'Coffee',
     color: 'from-amber-500/20 to-yellow-500/20',
     ctaButtons: [
