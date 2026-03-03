@@ -93,7 +93,7 @@ const brands: Brand[] = [
     longDescription:
       'Florida Garage Sales is your digital treasure map. We scour garage sales, estate sales, and liquidation events across the Sunshine State to bring you amazing new and used products at unbeatable prices. New finds drop daily\u2014browse, discover, and grab deals before they\u2019re gone. It\u2019s the thrill of the hunt, delivered to your screen.',
     email: 'FloridaGarageSales@CyberAdSpace.com',
-    image: null,
+    image: '/images/florida-garage-sales-logo.png',
     icon: 'ShoppingCart',
     color: 'from-orange-500/20 to-amber-500/20',
     ctaButtons: [

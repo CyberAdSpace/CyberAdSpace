@@ -23,9 +23,13 @@ export default function BrandCard({ brand }: BrandCardProps) {
       className={`group relative bg-gradient-to-br ${brand.color} border border-white/10 p-8 hover:border-white/30 transition-all duration-300 block`}
     >
       <div className="flex items-start justify-between mb-4">
-        <div className="w-12 h-12 bg-white/10 border border-white/20 flex items-center justify-center">
-          <Icon className="w-6 h-6 text-white" />
-        </div>
+        {brand.image ? (
+          <img src={brand.image} alt={brand.name} className="w-12 h-12 rounded object-cover" />
+        ) : (
+          <div className="w-12 h-12 bg-white/10 border border-white/20 flex items-center justify-center">
+            <Icon className="w-6 h-6 text-white" />
+          </div>
+        )}
         <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-white group-hover:translate-x-1 transition-all" />
       </div>
       <span className="text-xs text-gray-500 tracking-widest uppercase">{brand.category}</span>
