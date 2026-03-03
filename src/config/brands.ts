@@ -36,10 +36,11 @@ const brands: Brand[] = [
     color: 'from-pink-500/20 to-purple-500/20',
     ctaButtons: [
       { label: 'Create a Kids Song', href: '/kids-song', variant: 'primary' },
-          { label: 'Listen on YouTube', href: 'https://www.youtube.com/@antriasacademy', variant: 'secondary' },
-        ],
-        featured: true,
-        category: 'Music & Education',
+      { label: 'Listen on YouTube', href: 'https://www.youtube.com/@antriasacademy', variant: 'secondary' },
+      { label: 'Listen on Spotify', href: 'https://open.spotify.com/artist/4QdSOriTSeBVz5Ac6IX5BD', variant: 'secondary' },
+    ],
+    featured: true,
+    category: 'Music & Education',
   },
   {
     id: 'bam-casas',
@@ -76,10 +77,11 @@ const brands: Brand[] = [
     color: 'from-violet-500/20 to-indigo-500/20',
     ctaButtons: [
       { label: 'Create a Custom Song', href: '/create-song', variant: 'primary' },
-          { label: 'Listen on YouTube', href: 'https://www.youtube.com/@elevatedremedies', variant: 'secondary' },
-        ],
-        featured: true,
-        category: 'Music & Entertainment',
+      { label: 'Listen on YouTube', href: 'https://www.youtube.com/@elevatedremedies', variant: 'secondary' },
+      { label: 'Listen on Spotify', href: 'https://open.spotify.com/artist/4V15JQZJ4ddQR2m3NVvhNA', variant: 'secondary' },
+    ],
+    featured: true,
+    category: 'Music & Entertainment',
   },
   {
     id: 'florida-garage-sales',
