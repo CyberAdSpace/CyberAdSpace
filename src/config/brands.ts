@@ -72,7 +72,7 @@ const brands: Brand[] = [
     longDescription:
       'Elevated Remedies is where music meets technology. As a record label powered by AI, we help artists and fans create custom songs and distribute them worldwide. Whether you want a personalized track for a loved one, a beat for your brand, or to launch your music career, Elevated Remedies is your sound, elevated.',
     email: 'ElevatedRemedies@CyberAdSpace.com',
-    image: null,
+    image: '/images/elevated-remedies-logo.png',
     icon: 'Music',
     color: 'from-violet-500/20 to-indigo-500/20',
     ctaButtons: [
