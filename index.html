@@ -7,6 +7,16 @@
     <title>cyberadspace-marketplace</title>
   </head>
   <body>
+    <!-- Hidden form for Netlify Forms detection (React SPA) -->
+    <form name="service-request" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="address" />
+      <input type="text" name="issueType" />
+      <input type="text" name="urgency" />
+      <textarea name="details"></textarea>
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

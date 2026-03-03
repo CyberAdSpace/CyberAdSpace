@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Home, Send } from 'lucide-react'
+import { ArrowLeft, Home, Send, Loader2 } from 'lucide-react'
 import { trackEvent } from '../utils/analytics'
 
 export default function RequestService() {
@@ -13,10 +13,34 @@ export default function RequestService() {
   const [urgency, setUrgency] = useState('normal')
   const [details, setDetails] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     trackEvent('request_service_submit', { issueType, urgency })
-    setSubmitted(true)
+    setSubmitting(true)
+    try {
+      const formData = new URLSearchParams()
+      formData.append('form-name', 'service-request')
+      formData.append('name', name)
+      formData.append('email', email)
+      formData.append('phone', phone)
+      formData.append('address', address)
+      formData.append('issueType', issueType)
+      formData.append('urgency', urgency)
+      formData.append('details', details)
+
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString(),
+      })
+      setSubmitted(true)
+    } catch (err) {
+      console.error('Form submission error:', err)
+      setSubmitted(true)
+    }
+    setSubmitting(false)
   }
 
   return (
@@ -181,10 +205,20 @@ export default function RequestService() {
             </div>
             <button
               type="submit"
-              className="w-full bg-white text-black py-4 font-bold tracking-wide hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
+              disabled={submitting}
+              className="w-full bg-white text-black py-4 font-bold tracking-wide hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Send className="w-4 h-4" />
-              SUBMIT SERVICE REQUEST
+              {submitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  SUBMITTING...
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  SUBMIT SERVICE REQUEST
+                </>
+              )}
             </button>
           </form>
         )}
