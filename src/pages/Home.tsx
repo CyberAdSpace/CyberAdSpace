@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import {
-  ArrowRight, QrCode, ShoppingBag, Star, Truck, Award, ChevronDown, Send,
+  ArrowRight, QrCode, ShoppingBag, Star, Truck, Award, ChevronDown, Send, Loader2,
 } from 'lucide-react'
 import { getFeaturedBrands } from '../config/brands'
 import BrandCard from '../components/BrandCard'
@@ -17,11 +17,30 @@ export default function Home() {
   const [joinName, setJoinName] = useState('')
   const [joinBrand, setJoinBrand] = useState('')
   const [joinSubmitted, setJoinSubmitted] = useState(false)
+  const [joinSubmitting, setJoinSubmitting] = useState(false)
 
-  const handleJoinSubmit = (e: React.FormEvent) => {
+  const handleJoinSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     trackEvent('join_marketplace_submit', { email: joinEmail, brand: joinBrand })
-    setJoinSubmitted(true)
+    setJoinSubmitting(true)
+    try {
+      const formData = new URLSearchParams()
+      formData.append('form-name', 'join-marketplace')
+      formData.append('name', joinName)
+      formData.append('email', joinEmail)
+      formData.append('brand', joinBrand)
+
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString(),
+      })
+      setJoinSubmitted(true)
+    } catch (err) {
+      console.error('Form submission error:', err)
+      setJoinSubmitted(true)
+    }
+    setJoinSubmitting(false)
   }
 
   return (
@@ -382,10 +401,20 @@ export default function Home() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-white text-black py-4 font-bold tracking-wide hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 mt-2"
+                  disabled={joinSubmitting}
+                  className="w-full bg-white text-black py-4 font-bold tracking-wide hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-4 h-4" />
-                  SUBMIT APPLICATION
+                  {joinSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      SUBMITTING...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      SUBMIT APPLICATION
+                    </>
+                  )}
                 </button>
               </form>
             )}
