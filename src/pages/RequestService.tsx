@@ -55,8 +55,8 @@ export default function RequestService() {
             <p className="text-gray-400 mb-6">
               Our team will contact you at <span className="text-white">{email}</span> within 24
               hours. For urgent issues, email us directly at{' '}
-              <a href="mailto:bamcasas@cyberadspace.com" className="text-blue-400 hover:underline">
-                bamcasas@cyberadspace.com
+              <a href="mailto:BAMCasas@CyberAdSpace.com" className="text-blue-400 hover:underline">
+                BAMCasas@CyberAdSpace.com
               </a>
             </p>
             <Link
