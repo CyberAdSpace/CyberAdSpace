@@ -4,9 +4,24 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cyber-ad-space</title>
+    <title>cyberadspace-marketplace</title>
   </head>
   <body>
+    <!-- Hidden forms for Netlify Forms detection (React SPA) -->
+    <form name="service-request" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="address" />
+      <input type="text" name="issueType" />
+      <input type="text" name="urgency" />
+      <textarea name="details"></textarea>
+    </form>
+    <form name="join-marketplace" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="brand" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
