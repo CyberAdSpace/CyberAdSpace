@@ -23,12 +23,12 @@ export default function RewardsWidget() {
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4">
-            EARN <span className="text-amber-400">CYBER POINTS</span>
+            EARN <span className="text-amber-400">CAS TOKENS</span>
           </h2>
           <div className="w-20 h-0.5 bg-amber-400 mx-auto mb-6" />
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Every interaction earns you Cyber Points. Shop, scan, create, and refer to build your
-            balance. Redeem for discounts, early access, and exclusive drops.
+                        Every interaction earns you CAS tokens (Cyber Ad Space) on the XPR blockchain. Shop, scan, create, and refer to build your
+                        balance. Redeem for discounts, early access, and exclusive drops.
           </p>
         </div>
 
@@ -44,7 +44,7 @@ export default function RewardsWidget() {
                 </div>
                 <div className="text-right ml-auto">
                   <span className="text-2xl font-black text-amber-400">+{rule.points}</span>
-                  <span className="text-xs text-gray-500 block">points</span>
+                  <span className="text-xs text-gray-500 block">CAS</span>
                 </div>
               </div>
               <p className="text-sm font-bold text-white">{rule.description}</p>
@@ -56,7 +56,7 @@ export default function RewardsWidget() {
           <div className="inline-block bg-white/5 border border-white/10 px-8 py-4">
             <p className="text-xs text-gray-500 tracking-widest uppercase mb-1">Coming Soon</p>
             <p className="text-sm text-gray-300">
-              Redeem Cyber Points for discounts, exclusive products, and early access to new drops.
+              Redeem CAS tokens for discounts, exclusive products, and early access to new drops.
             </p>
           </div>
         </div>

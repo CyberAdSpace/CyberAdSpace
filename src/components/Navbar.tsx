@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, QrCode, Award } from 'lucide-react'
+import { Menu, X, QrCode, Award, ShoppingCart } from 'lucide-react'
 import { rewardsService } from '../services/rewards'
+import { useCart } from '../context/CartContext'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
   const points = rewardsService.getBalance()
+  const { cartCount, setCartOpen } = useCart()
 
   useState(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -49,9 +51,20 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <button
+              onClick={() => setCartOpen(true)}
+              className="relative p-2 text-gray-300 hover:text-white transition-colors"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-white text-black text-xs font-bold w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
             <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
               <Award className="w-4 h-4 text-amber-400" />
-              <span className="text-xs font-bold text-gray-300">{points} CP</span>
+              <span className="text-xs font-bold text-gray-300">{points} CAS</span>
             </div>
             <Link
               to="/brands"
@@ -62,9 +75,20 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-3 md:hidden">
+            <button
+              onClick={() => setCartOpen(true)}
+              className="relative p-2 text-white"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-white text-black text-xs font-bold w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
             <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
               <Award className="w-3.5 h-3.5 text-amber-400" />
-              <span className="text-xs font-bold text-gray-300">{points}</span>
+              <span className="text-xs font-bold text-gray-300">{points} CAS</span>
             </div>
             <button onClick={() => setMenuOpen(!menuOpen)} className="p-2 text-white">
               {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

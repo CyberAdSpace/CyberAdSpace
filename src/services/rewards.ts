@@ -1,13 +1,13 @@
 /**
- * Rewards Service - Cyber Points
+ * Rewards Service - CAS Tokens (Cyber Ad Space)
  *
- * Token-ready architecture: this module abstracts the rewards/points system
+ * Token-ready architecture: this module abstracts the rewards/token system
  * behind an interface. Currently uses local state + localStorage.
- * When ready, swap the implementation to XPR Network + CyberAdSpace token (BlastPad)
- * without changing any UI components.
+ * CAS is a coin already created on the XPR Blockchain.
+ * When ready, swap the implementation to read on-chain CAS balance.
  *
  * Future XPR integration point: replace RewardsProvider with one that uses
- * @proton/web-sdk to read on-chain token balance and submit transfer actions.
+ * @proton/web-sdk to read on-chain CAS token balance and submit transfer actions.
  */
 
 export interface RewardsAction {

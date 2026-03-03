@@ -62,20 +62,41 @@ export default function BrandDetail() {
 
         {/* CTAs */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          {brand.ctaButtons.map((cta) => (
-            <Link
-              key={cta.label}
-              to={cta.href}
-              className={`group flex items-center justify-center gap-2 py-5 font-bold tracking-wide text-lg transition-all ${
-                cta.variant === 'primary'
-                  ? 'bg-white text-black hover:bg-gray-200'
-                  : 'border border-white/20 text-white hover:bg-white/5'
-              }`}
-            >
-              {cta.label}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          ))}
+          {brand.ctaButtons.map((cta) => {
+            const isExternal = cta.href.startsWith('http')
+            if (isExternal) {
+              return (
+                <a
+                  key={cta.label}
+                  href={cta.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group flex items-center justify-center gap-2 py-5 font-bold tracking-wide text-lg transition-all ${
+                    cta.variant === 'primary'
+                      ? 'bg-white text-black hover:bg-gray-200'
+                      : 'border border-white/20 text-white hover:bg-white/5'
+                  }`}
+                >
+                  {cta.label}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              )
+            }
+            return (
+              <Link
+                key={cta.label}
+                to={cta.href}
+                className={`group flex items-center justify-center gap-2 py-5 font-bold tracking-wide text-lg transition-all ${
+                  cta.variant === 'primary'
+                    ? 'bg-white text-black hover:bg-gray-200'
+                    : 'border border-white/20 text-white hover:bg-white/5'
+                }`}
+              >
+                {cta.label}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            )
+          })}
         </div>
 
         {/* Contact */}

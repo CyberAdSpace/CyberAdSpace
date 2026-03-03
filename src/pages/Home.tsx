@@ -7,9 +7,12 @@ import { getFeaturedBrands } from '../config/brands'
 import BrandCard from '../components/BrandCard'
 import RewardsWidget from '../components/RewardsWidget'
 import { trackEvent } from '../utils/analytics'
+import { products, ALL_SIZES, useCart } from '../context/CartContext'
+import type { SizeKey } from '../context/CartContext'
 
 export default function Home() {
   const brands = getFeaturedBrands()
+  const { addToCart, selectedSizes, setSelectedSize } = useCart()
   const [joinEmail, setJoinEmail] = useState('')
   const [joinName, setJoinName] = useState('')
   const [joinBrand, setJoinBrand] = useState('')
@@ -126,7 +129,7 @@ export default function Home() {
                 icon: <Award className="w-6 h-6 text-white" />,
                 step: '04',
                 title: 'Earn Rewards',
-                desc: 'Every purchase, scan, and interaction earns you Cyber Points.',
+                desc: 'Every purchase, scan, and interaction earns you CAS tokens.',
               },
             ].map((item) => (
               <div
@@ -177,6 +180,89 @@ export default function Home() {
               VIEW ALL BRANDS
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Shop / Merch Section */}
+      <section className="py-20 sm:py-28 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-950/50 to-black" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4">
+              EXCLUSIVE <span className="text-gray-500">MERCH</span>
+            </h2>
+            <div className="w-20 h-0.5 bg-white mx-auto mb-6" />
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Limited-edition CyberAdSpace gear. Wear the brand, rep the movement.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map((product) => {
+              const selSize = selectedSizes[product.id] as SizeKey | undefined
+              const stock = product.sizes && selSize ? product.sizes[selSize] : null
+              return (
+                <div
+                  key={product.id}
+                  className="group bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-300"
+                >
+                  <div className="relative aspect-square bg-gradient-to-br from-gray-900 to-black flex items-center justify-center overflow-hidden">
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-3/4 h-3/4 object-contain group-hover:scale-110 transition-transform duration-500"
+                      />
+                    ) : (
+                      <ShoppingBag className="w-16 h-16 text-gray-700" />
+                    )}
+                    <span className="absolute top-3 left-3 bg-white text-black text-xs font-bold px-2 py-1 tracking-wider">
+                      {product.badge}
+                    </span>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold text-sm mb-1">{product.name}</h3>
+                    <p className="text-lg font-black mb-3">${product.price.toFixed(2)}</p>
+
+                    {product.sizes && (
+                      <div className="mb-3">
+                        <div className="flex gap-1.5 flex-wrap">
+                          {ALL_SIZES.map((s) => (
+                            <button
+                              key={s}
+                              onClick={() => setSelectedSize(product.id, s)}
+                              className={`px-2 py-1 text-xs font-bold border transition-colors ${
+                                selSize === s
+                                  ? 'bg-white text-black border-white'
+                                  : 'border-white/20 text-gray-400 hover:border-white/40'
+                              }`}
+                            >
+                              {s}
+                            </button>
+                          ))}
+                        </div>
+                        {stock !== null && (
+                          <p className="text-xs text-gray-500 mt-1.5">{stock} in stock</p>
+                        )}
+                      </div>
+                    )}
+
+                    <button
+                      onClick={() => product.available && addToCart(product, selSize)}
+                      disabled={!product.available || (product.sizes && !selSize)}
+                      className={`w-full py-2.5 text-sm font-bold tracking-wide transition-colors ${
+                        product.available
+                          ? 'bg-white text-black hover:bg-gray-200'
+                          : 'bg-white/10 text-gray-500 cursor-not-allowed'
+                      }`}
+                    >
+                      {product.available ? 'ADD TO CART' : 'COMING SOON'}
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
