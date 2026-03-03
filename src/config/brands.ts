@@ -31,7 +31,7 @@ const brands: Brand[] = [
     longDescription:
       "Antria's Academy creates custom children\u2019s songs powered by AI that educate, inspire, and bring joy to little ones everywhere. Every song is designed with love, learning, and creativity in mind. Follow us on YouTube and Spotify to hear our latest releases and create your own personalized kids song today.",
     email: 'AntriasAcademy@CyberAdSpace.com',
-    image: null,
+    image: '/images/antrias-academy-logo.png',
     icon: 'Sparkles',
     color: 'from-pink-500/20 to-purple-500/20',
     ctaButtons: [
