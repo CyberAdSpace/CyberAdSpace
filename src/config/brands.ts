@@ -52,7 +52,7 @@ const brands: Brand[] = [
     longDescription:
       'BAM Casas is the backbone of property care in Florida. From routine maintenance and emergency repairs to full property management, we handle it all so you don\u2019t have to. Our team is local, reliable, and just a message away. Whether you own one rental or a portfolio, BAM Casas keeps your properties running smooth.',
     email: 'BAMCasas@CyberAdSpace.com',
-    image: null,
+    image: '/images/bam-casas-logo.png',
     icon: 'Home',
     color: 'from-blue-500/20 to-cyan-500/20',
     ctaButtons: [
