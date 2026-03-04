@@ -49,7 +49,7 @@ export default function BrandDetail() {
         <div className={`bg-gradient-to-br ${brand.color} border border-white/10 p-10 sm:p-16 mb-12`}>
           {brand.image && (
             <div className="mb-6">
-              <img src={brand.image} alt={brand.name} className="max-h-32 w-auto object-contain" />
+              <img src={brand.image} alt={brand.name} className="h-32 w-auto object-contain" />
             </div>
           )}
           <div className="flex items-center gap-4 mb-6">

@@ -24,7 +24,7 @@ export default function BrandCard({ brand }: BrandCardProps) {
     >
       <div className="flex items-start justify-between mb-4">
         {brand.image ? (
-          <img src={brand.image} alt={brand.name} className="h-12 max-w-[160px] w-auto object-contain" />
+          <img src={brand.image} alt={brand.name} className="h-16 max-w-[200px] w-auto object-contain" />
         ) : (
           <div className="w-12 h-12 bg-white/10 border border-white/20 flex items-center justify-center">
             <Icon className="w-6 h-6 text-white" />
