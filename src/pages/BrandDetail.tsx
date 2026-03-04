@@ -47,10 +47,13 @@ export default function BrandDetail() {
 
         {/* Hero */}
         <div className={`bg-gradient-to-br ${brand.color} border border-white/10 p-10 sm:p-16 mb-12`}>
+          {brand.image && (
+            <div className="mb-6">
+              <img src={brand.image} alt={brand.name} className="max-h-32 w-auto object-contain" />
+            </div>
+          )}
           <div className="flex items-center gap-4 mb-6">
-            {brand.image ? (
-              <img src={brand.image} alt={brand.name} className="w-16 h-16 rounded object-cover" />
-            ) : (
+            {!brand.image && (
               <div className="w-16 h-16 bg-white/10 border border-white/20 flex items-center justify-center">
                 <Icon className="w-8 h-8 text-white" />
               </div>
